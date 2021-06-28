@@ -1,0 +1,105 @@
+核心板
+1.核心板的架构
+ARMv71
+2.核心板DDR大小
+256/512M
+3.核心板emmc大小
+8G
+4.核心板定制内核
+ubuntu linux 4.14
+5.核心板发行版本
+Ubuntu 16.04.2 LTS
+
+
+FriendlyCore默认帐户：
+普通用户：
+
+   用户名: pi
+   密码: pi
+   
+   用户名:chen
+   密码:123456
+Root用户：
+
+   用户名: root
+   密码: fa
+
+
+操作
+1.挂载usb
+在mnt下创建usb目录
+mount -t vfat  /dev/sda1 /mnt/usb
+2.测试设备
+/home/chen/3.龙芯测试demo/linux_back_demo/test
+在该路径下运行./vpm673Test
++
+2.在该机器下生成对应的通信库
+cd jpeg-9b-ubuntu
+make clean
+chmod 777 -R *
+./configure
+make
+
+rm ../linux_vein_lib/lib/*
+
+cp .libs/libjpeg.so* ../linux_vein_lib/lib
+
+cd ../linux_vein_lib/src
+make clean
+make
+生成的Linux库在linux_vein_lib/lib/下
+
+
+
+
+3.wifi
+安装USBWIFI热点
+apt-get install --reinstall linux-headers-$(uname -r) linux-headers-generic build-essential dkms  
+
+开启系统服务 systemctl restart NetworkManager
+开启wifi:nmcli r wifi on
+扫描热点:nmcli dev wifi
+连接到指定热点:nmcli dev wifi connect "SSID" password "PASSWORD" ifname wlan0 
+说明:
+将 SSID和 PASSWORD 替换成实际的 WiFi名称和密码。
+连接成功后，下次开机，WiFi 也会自动连接。
+
+nmcli dev wifi connect "HUAWEI P30 Pro" password "cbj47164716" ifname wlan0 
+
+
+
+
+4.蒲公英
+pgyvpn
+
+
+
+5.配置静态IP
+auto eth0
+iface eth0 inet static
+address 192.168.9.10
+netmask  255.255.255.0
+gateway  192.168.9.1
+dns-nameservers 114.114.114.114
+
+
+对应电脑配置:
+address 192.168.9.15
+netmask  255.255.255.0
+gateway  192.168.9.1
+dns-nameservers 114.114.114.114
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
